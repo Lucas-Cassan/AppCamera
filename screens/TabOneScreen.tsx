@@ -14,6 +14,7 @@ import { CapturedPicture, FlashMode } from "expo-camera/build/Camera.types";
 import * as SecureStore from "expo-secure-store";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
+import { MediaLibrary } from "expo-media-library";
 
 export default function App() {
   const [hasPermission, setHasPermission] = useState<any>(null);
@@ -55,11 +56,17 @@ export default function App() {
               <Entypo name="share" size={24} color="black" />​
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonPlus}>
+          <TouchableOpacity
+            style={styles.buttonPlus}
+            onPress={async () => {
+              MediaLibrary.saveToLibraryAsync(item.uri);
+            }}
+          >
             <Text style={styles.textButton}>
               <FontAwesome name="download" size={24} color="black" />
             </Text>
           </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.buttonPlus}
             onPress={() => {
