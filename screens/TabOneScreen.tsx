@@ -270,14 +270,35 @@ export default function App() {
           ></TouchableOpacity>
         </View>
       </Camera>
-      <View style={styles.galleryBloc}>
-        <FlatList
-          horizontal
-          data={pictures}
-          renderItem={renderPicture}
-          keyExtractor={(item) => item.uri}
-        />
-      </View>
+      {popup ? (
+        <View>
+          <TouchableOpacity>
+            <Text
+              onPress={() => {
+                setPopup(false);
+                if (pictures.length === 1) {
+                  AsyncStorage.removeItem("image");
+                }
+                setPictures(
+                  pictures.filter((pict: any) => pict.uri !== uriPicture)
+                );
+              }}
+            >
+              Oui
+            </Text>
+            <Text onPress={() => setPopup(false)}>Non</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={styles.galleryBloc}>
+          <FlatList
+            horizontal
+            data={pictures}
+            renderItem={renderPicture}
+            keyExtractor={(item) => item.uri}
+          />
+        </View>
+      )}
     </View>
   );
 }
